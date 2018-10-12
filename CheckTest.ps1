@@ -1,6 +1,6 @@
 
 #Add PC you want checked to this array:
-$Global:PCArrayTrusted =  @( 
+$Global:PCArray =  @( 
 "DK-TC100776", "DK-TC100777", "DK-TC100812", "DK-TC100847", "DK-TC100857", "DK-TC101015", "DK-TC101075", "DK-TC101102", "DK-TC101126", "DK-TC101275", 
 "DK-TC101299", "DK-TC101304", "DK-TC101306", "DK-TC101365", "PD100106", "PD100299", "PD100347", "PW00051", "PW00064", "PW00067", "PW00192", "PW00305",
 "PW00323", "PW00327", "PW00332", "PW00462", "PW00485", "PW00503", "PW00535", "PW00536", "PW00544", "PW00549", "PW00568", "PW00569", "PW00589", "PW00735",
@@ -17,7 +17,7 @@ $Global:Username = get-content $psscriptroot\Passwords.txt | Select-Object -firs
 $Global:Password = get-content $psscriptroot\Passwords.txt | Select-Object -first 1 -skip 1
 
 
-foreach ($PC in $Global:PCArrayTrusted) {
+foreach ($PC in $Global:PCArray) {
     try {
         Invoke-Sqlcmd -ServerInstance $PC -Database "Marking" -Query $Global:SqlSelect -ErrorAction Stop -QueryTimeout 2 | Out-Null
         $PC + " Trusted"
@@ -37,7 +37,7 @@ foreach ($PC in $Global:PCArrayTrusted) {
     }
 }
 Write-Host "---------------- Trusted test done--------------------"
-foreach ($PC in $Global:PCArrayTrusted) {
+foreach ($PC in $Global:PCArray) {
     try {
         Invoke-Sqlcmd -ServerInstance $PC -Database "Marking" -Query $Global:SqlSelect -ErrorAction Stop -QueryTimeout 2 -Username $Global:Username -Password $Global:Password | Out-Null
         $PC + " SQL"
